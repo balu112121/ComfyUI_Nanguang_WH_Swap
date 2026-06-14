@@ -1,0 +1,117 @@
+{
+  "last_node_id": 6,
+  "last_link_id": 8,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "EmptyLatentImage",
+      "pos": [60, 100],
+      "size": [315, 278],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {"name": "LATENT", "type": "LATENT", "links": [1], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "EmptyLatentImage"},
+      "widgets_values": [512, 512, 1]
+    },
+    {
+      "id": 2,
+      "type": "Comfyui_Width_Height_Interchange",
+      "pos": [450, 100],
+      "size": [315, 278],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {"name": "width", "type": "INT", "link": 2, "slot_index": 0},
+        {"name": "height", "type": "INT", "link": 3, "slot_index": 1},
+        {"name": "disable_swap", "type": "BOOLEAN", "link": null, "slot_index": 2}
+      ],
+      "outputs": [
+        {"name": "width_out", "type": "INT", "links": [4], "slot_index": 0},
+        {"name": "height_out", "type": "INT", "links": [5], "slot_index": 1}
+      ],
+      "properties": {"Node name for S&R": "南光AI图像宽高互换"},
+      "widgets_values": [false]
+    },
+    {
+      "id": 3,
+      "type": "KSampler",
+      "pos": [830, 100],
+      "size": [315, 486],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {"name": "model", "type": "MODEL", "link": null, "slot_index": 0},
+        {"name": "positive", "type": "CONDITIONING", "link": null, "slot_index": 1},
+        {"name": "negative", "type": "CONDITIONING", "link": null, "slot_index": 2},
+        {"name": "latent_image", "type": "LATENT", "link": 1, "slot_index": 3}
+      ],
+      "outputs": [
+        {"name": "LATENT", "type": "LATENT", "links": [6], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "KSampler"},
+      "widgets_values": [12345678, "random", 20, 8, "euler", "normal", 1]
+    },
+    {
+      "id": 4,
+      "type": "VAEDecode",
+      "pos": [1210, 100],
+      "size": [210, 278],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {"name": "samples", "type": "LATENT", "link": 6, "slot_index": 0},
+        {"name": "vae", "type": "VAE", "link": null, "slot_index": 1}
+      ],
+      "outputs": [
+        {"name": "IMAGE", "type": "IMAGE", "links": [7], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "VAEDecode"}
+    },
+    {
+      "id": 5,
+      "type": "PreviewImage",
+      "pos": [1480, 100],
+      "size": [300, 278],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {"name": "images", "type": "IMAGE", "link": 7, "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "PreviewImage"}
+    },
+    {
+      "id": 6,
+      "type": "PrimitiveNode",
+      "pos": [450, 420],
+      "size": [315, 106],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "outputs": [
+        {"name": "int", "type": "INT", "links": [8], "slot_index": 0}
+      ],
+      "properties": {"Node name for S&R": "Int"},
+      "widgets_values": [512]
+    }
+  ],
+  "links": [
+    [1, 1, 0, 3, 3, "LATENT"],
+    [2, 6, 0, 2, 0, "INT"],
+    [3, 6, 0, 2, 1, "INT"],
+    [4, 2, 0, 3, 0, "INT"],
+    [5, 2, 1, 3, 1, "INT"],
+    [6, 3, 0, 4, 0, "LATENT"],
+    [7, 4, 0, 5, 0, "IMAGE"],
+    [8, 6, 0, 2, 0, "INT"]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {}
+}
